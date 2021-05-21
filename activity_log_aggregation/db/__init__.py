@@ -46,14 +46,14 @@ def _validate_start_end(start: arrow.Arrow, end: arrow.Arrow):
         raise Exception("Start time can't be after end time!")
 
 
-def _get_pks_in_range(start: arrow.Arrow, end: arrow.Arrow) -> List[str]:
+def _get_pks_in_range(start: arrow.Arrow, end: arrow.Arrow, desc=True) -> List[str]:
     _validate_start_end(start, end)
     pks = set()
     while start <= end:
         pks.add(_date_to_pk(start))
         start = start.shift(days=1)
     pks.add(_date_to_pk(end))
-    return sorted(list(pks))
+    return sorted(list(pks), reverse=desc)
 
 
 def get_most_recent_activity_date_by_vendor(stream_vendor: StreamVendorName) -> Optional[arrow.Arrow]:
@@ -89,7 +89,7 @@ def _get_activity_logs_for_pk(pk: str, start: arrow.Arrow) -> List[ActivityLog]:
 
 
 def get_logs(start: arrow.Arrow, end: Optional[arrow.Arrow] = None, filter_vendors: List[StreamVendorName] = None,
-             limit=None, desc=False) -> List[ActivityLog]:
+             limit=None, desc=True) -> List[ActivityLog]:
     end = end or arrow.utcnow()
     if filter_vendors:
         raise NotImplementedError()
@@ -99,7 +99,7 @@ def get_logs(start: arrow.Arrow, end: Optional[arrow.Arrow] = None, filter_vendo
 
     # TODO: implement this as parallel, NOTE parallelism in python SUCKS
     logs: List[ActivityLog] = []
-    for pk in _get_pks_in_range(start, end):
+    for pk in _get_pks_in_range(start, end, desc):
         logs += _get_activity_logs_for_pk(pk, start)
         if limit and len(logs) > limit:
             break

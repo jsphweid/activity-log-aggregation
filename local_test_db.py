@@ -24,5 +24,5 @@ def f():
     }
 
 
-result = db.get_logs(arrow.get("2021-03-15T14:31:12.160Z"), None, desc=True)
-print('result', len(result))
+result = db.get_logs(arrow.get("2021-05-15T14:31:12.160Z"), limit=None)
+print('result', result[0:5])
