@@ -3,7 +3,6 @@ from dataclasses import dataclass
 import arrow
 import boto3
 import math
-import asyncio
 from typing import Optional, List
 from boto3.dynamodb.conditions import Key
 
