@@ -88,8 +88,8 @@ def _get_activity_logs_for_pk(pk: str, start: arrow.Arrow) -> List[ActivityLog]:
     return logs
 
 
-def get_logs(start: arrow.Arrow, end: Optional[arrow.Arrow] = None, filter_vendors: List[StreamVendorName] = None, desc=False) -> \
-        List[ActivityLog]:
+def get_logs(start: arrow.Arrow, end: Optional[arrow.Arrow] = None, filter_vendors: List[StreamVendorName] = None,
+             limit=None, desc=False) -> List[ActivityLog]:
     end = end or arrow.utcnow()
     if filter_vendors:
         raise NotImplementedError()
@@ -101,8 +101,12 @@ def get_logs(start: arrow.Arrow, end: Optional[arrow.Arrow] = None, filter_vendo
     logs: List[ActivityLog] = []
     for pk in _get_pks_in_range(start, end):
         logs += _get_activity_logs_for_pk(pk, start)
+        if limit and len(logs) > limit:
+            break
+
     logs.sort(key=lambda x: x.date,
               reverse=desc)  # TODO: Setting this on the DB return could be slightly more optimal
+    logs = logs[0:limit] if limit else logs
     return logs
 
 

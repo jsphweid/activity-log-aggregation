@@ -23,4 +23,6 @@ def f():
         'body': list(map(convert_log, result))
     }
 
-print(f())
+
+result = db.get_logs(arrow.get("2021-03-15T14:31:12.160Z"), None, desc=True)
+print('result', len(result))

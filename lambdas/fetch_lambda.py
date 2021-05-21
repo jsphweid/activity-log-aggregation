@@ -28,7 +28,8 @@ def handler(event, _):
     params = event['queryStringParameters']
     start = parse_date_arg(params.get('start'))
     end = parse_date_arg(params['end']) if params.get('end') else None
-    results = db.get_logs(start, end, desc=True)
+    first = int(params["first"]) if params.get("first") else None
+    results = db.get_logs(start, end, limit=first, desc=True)
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json',
