@@ -1,0 +1,11 @@
+prod.env
+venv
+.DS_Store
+cdk/*.js
+cdk/node_modules
+deploy.sh
+build
+__pycache__
+.idea
+node_modules
+cdk/cdk.out
