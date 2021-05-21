@@ -64,6 +64,7 @@ export namespace ActivityLogAggregation {
             NOTION_EMAIL: props.env.NOTION_EMAIL,
             NOTION_TOKEN_V2: props.env.NOTION_TOKEN_V2,
             NOTION_SPACE_ID: props.env.NOTION_SPACE_ID,
+            NOTION_DATA_DIR: "/tmp",
           },
         }
       );
