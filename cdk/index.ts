@@ -12,7 +12,6 @@ const app = new App();
 prepare().then(() => {
   new ActivityLogAggregation.Stack(app, "ActivityLogAggregation", {
     env: { region: REGION || "us-west-2", ...readEnvFile() },
-    hostedZoneName: "josephweidinger.com",
   });
 
   app.synth();

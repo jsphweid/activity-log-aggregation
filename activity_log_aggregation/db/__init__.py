@@ -106,10 +106,17 @@ def get_logs(start: arrow.Arrow, end: Optional[arrow.Arrow] = None, filter_vendo
     return logs
 
 
+def _contains_potentially_malicious_html(html: str) -> bool:
+    return "<script>" in html or \
+           "</script>" in html
+
+
 def write_activity_logs(activity_logs: List[StreamEvent]):
     composite_keys = set()
     with table.batch_writer() as batch:
         for log in activity_logs:
+            if _contains_potentially_malicious_html(log.basic_html):
+                continue
             utc_date = _ensure_utc(log.date)
             utc_date_ms = _get_millis(utc_date)
             hash_id = utils.hash_str(log.basic_html)

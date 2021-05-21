@@ -1,6 +1,19 @@
 # activity-log-aggregation
 
 
+# Security note
+To get this project up and running quickly, I formulated the HTML that is displayed on the backend. This
+is convenient because at the time of extraction from Github/Notion/etc., the structure of how something
+should be displayed is most obvious at that point. So I decided to formulate the `basic_html` there
+and save it in the DB. While this is the easiest, it's not the safest. If someone strategically were to
+somehow mess with the datasources I'm pulling from (maybe put some <script> in a Notion doc), it could
+be stored in my DB and rendered dangerously for anyone coming to my site. For this reason I have a very primitive
+sanitization function `_contains_potentially_malicious_html` designed to prevent potentially malicious html from
+entering the DB.
+
+In the future I may take more time in engineering a universally safer and more standard option.
+
+
 ## Setup for run/deploy
 You need to have a file `prod.env` at the root that looks like:
 ```bash

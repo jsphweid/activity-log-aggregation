@@ -31,6 +31,7 @@ def handler(event, _):
     results = db.get_logs(start, end, desc=True)
     return {
         'statusCode': 200,
-        'headers': {'Content-Type': 'application/json'},
+        'headers': {'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'},
         'body': json.dumps(list(map(convert_log, results)))
     }

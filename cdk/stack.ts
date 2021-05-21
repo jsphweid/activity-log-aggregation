@@ -3,13 +3,13 @@ import * as events from "@aws-cdk/aws-events";
 import * as targets from "@aws-cdk/aws-events-targets";
 import * as lambda from "@aws-cdk/aws-lambda";
 import * as dynamodb from "@aws-cdk/aws-dynamodb";
+import * as apiGateway from "@aws-cdk/aws-apigateway";
 import { PythonFunction } from "@aws-cdk/aws-lambda-python";
 
 // import * as sqs from "@aws-cdk/aws-sqs";
 // import * as lambdaEventSource from "@aws-cdk/aws-lambdas-event-sources";
 // import * as s3 from "@aws-cdk/aws-s3";
 // import * as iam from "@aws-cdk/aws-iam";
-import * as apiGateway from "@aws-cdk/aws-apigateway";
 
 import { Duration } from "@aws-cdk/core";
 import { HostedZone } from "@aws-cdk/aws-route53";
@@ -99,6 +99,10 @@ export namespace ActivityLogAggregation {
           methodOptions: {
             "/*/*": { throttlingRateLimit: 3, throttlingBurstLimit: 5 },
           },
+        },
+        defaultCorsPreflightOptions: {
+          allowOrigins: apiGateway.Cors.ALL_ORIGINS,
+          allowMethods: apiGateway.Cors.ALL_METHODS,
         },
       });
 
