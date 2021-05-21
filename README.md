@@ -13,6 +13,8 @@ entering the DB.
 
 In the future I may take more time in engineering a universally safer and more standard option.
 
+For another layer of protection, I'm using `DOMPurify` on the frontend.
+
 
 ## Setup for run/deploy
 You need to have a file `prod.env` at the root that looks like:
