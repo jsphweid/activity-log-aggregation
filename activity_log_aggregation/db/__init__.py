@@ -105,6 +105,7 @@ def get_logs(start: arrow.Arrow, end: Optional[arrow.Arrow] = None, filter_vendo
 
     logs.sort(key=lambda x: x.date,
               reverse=desc)  # TODO: Setting this on the DB return could be slightly more optimal
+    logs = [log for log in logs if start < log.date <= end]
     logs = logs[0:limit] if limit else logs
     return logs
 

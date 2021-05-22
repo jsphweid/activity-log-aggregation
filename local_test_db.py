@@ -23,6 +23,6 @@ def f():
         'body': list(map(convert_log, result))
     }
 
-
-result = db.get_logs(arrow.get("2021-05-15T14:31:12.160Z"), limit=None)
+# 2021-05-12T00:00:00.000Z&end=2021-05-17T00:00:00.000Z
+result = db.get_logs(arrow.get("2021-05-12T00:00:00.000Z"), arrow.get("2021-05-17T00:00:00.000Z"), limit=None)
 print('result', result[0:5])
