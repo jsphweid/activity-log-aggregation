@@ -26,3 +26,7 @@ def f():
 # 2021-05-12T00:00:00.000Z&end=2021-05-17T00:00:00.000Z
 result = db.get_logs(arrow.get("2021-05-12T00:00:00.000Z"), arrow.get("2021-05-17T00:00:00.000Z"), limit=None)
 print('result', result[0:5])
+
+
+w = db.get_most_recent_activity_date_by_vendor(StreamVendorName.Notion)
+print('w', w)

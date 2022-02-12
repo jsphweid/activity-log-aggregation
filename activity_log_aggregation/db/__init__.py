@@ -56,10 +56,10 @@ def _get_pks_in_range(start: arrow.Arrow, end: arrow.Arrow, desc=True) -> List[s
 
 
 def get_most_recent_activity_date_by_vendor(stream_vendor: StreamVendorName) -> Optional[arrow.Arrow]:
-    MAX_NUM_DAYS_TO_CHECK = 18
+    max_num_days_to_check = 60
     start_date = arrow.utcnow()
 
-    while MAX_NUM_DAYS_TO_CHECK >= 0:
+    while max_num_days_to_check >= 0:
         response = table.query(IndexName='GSI1',
                                KeyConditionExpression=Key(PRIMARY_KEY).eq(_date_to_pk(start_date)) &
                                                       Key(GSI1_SORT_KEY).begins_with(stream_vendor.name),
@@ -68,7 +68,7 @@ def get_most_recent_activity_date_by_vendor(stream_vendor: StreamVendorName) -> 
             # structure of GSI1_SORT_KEY is like `Notion#1621394799576#s9df09fis`
             return arrow.get(int(response["Items"][0][GSI1_SORT_KEY].split("#")[1]))
 
-        MAX_NUM_DAYS_TO_CHECK -= 1
+        max_num_days_to_check -= 1
         start_date = start_date.shift(days=-1)
 
     return None
