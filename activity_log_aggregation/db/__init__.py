@@ -56,7 +56,7 @@ def _get_pks_in_range(start: arrow.Arrow, end: arrow.Arrow, desc=True) -> List[s
 
 
 def get_most_recent_activity_date_by_vendor(stream_vendor: StreamVendorName) -> Optional[arrow.Arrow]:
-    MAX_NUM_DAYS_TO_CHECK = 14
+    MAX_NUM_DAYS_TO_CHECK = 18
     start_date = arrow.utcnow()
 
     while MAX_NUM_DAYS_TO_CHECK >= 0:

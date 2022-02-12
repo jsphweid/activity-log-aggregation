@@ -1,5 +1,6 @@
 prod.env
 venv
+.venv
 .DS_Store
 cdk/*.js
 cdk/node_modules
